@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Play app</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/play-app.css">
+</head>
+<body>
+	<!-- loader -->
+	<div id="load" class="preloader">
+		<div class="loader">
+			<span class="span-load"></span>Loading... <br><br>
+			<progress id="load-progress" value="12" max="100"> </progress>
+		</div>
+	</div>
+	<!-- Play app -->
+	<div class="play-app">
+		<video width="1280" height="720" class="video" src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_10MB.mp4"></video>
+		
+		<div class="btn-play">
+			<input type="range" name="timeLoad" class="play-range"> <br>
+
+			<a href="#play" class="play-pause active"><img src="img/play.svg"></a>
+			<a href="#pause" class="play-pause"><img src="img/pause.svg"></a>	
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
