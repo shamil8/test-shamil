@@ -4,28 +4,33 @@
 	<meta charset="UTF-8">
 	<title>Play app</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/play-app.css">
 </head>
 <body>
+<div class="page">
 	<!-- loader -->
-	<div id="load" class="preloader">
-		<div class="loader">
-			<span class="span-load"></span>Loading... <br><br>
-			<progress id="load-progress" value="12" max="100"> </progress>
+	<div class="page__preloader preloader">
+		<div class="preloader__loader preloader-loader">
+			<span class="preloader__animate"></span>Loading... <br><br>
+			<progress class="preloader__progress" value="0" max="100"> </progress>
 		</div>
 	</div>
+
 	<!-- Play app -->
-	<div class="play-app">
-		<video width="1280" height="720" class="video" src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_10MB.mp4"></video>
-		
-		<div class="btn-play">
-			<input type="range" name="timeLoad" class="play-range"> <br>
+	<div class="page__play play">
+		<video class="play__video" src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_10MB.mp4"></video>
 
-			<a href="#play" class="play-pause active"><img src="img/play.svg"></a>
-			<a href="#pause" class="play-pause"><img src="img/pause.svg"></a>	
+		<div class="play__control play-control">
+			<input type="range" class="play__range" > <br>
+
+			<a href="#play" class="play__btn play__btn__active">
+				<img src="img/play.svg" class="play__btn__img">
+			</a>
+			<a href="#pause" class="play__btn">
+				<img src="img/pause.svg" class="play__btn__img">
+			</a>
 		</div>
 	</div>
-
-	<script type="text/javascript" src="js/script.js"></script>
+</div>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

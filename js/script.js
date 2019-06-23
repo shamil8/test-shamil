@@ -1,66 +1,73 @@
-document.body.onload = function() {
-	setTimeout(function () {
-	var load = document.getElementById('load');
-		if (!load.classList.contains('hidload')) {
-			load.classList.add('hidload');
-		}
-	}, 1000 );
-	loadProgress(1000/100) // т.е. время за все повторения 1s!
+class Display {
+    constructor(time) {
+        this.start = 0;
+        this.time = time * 1000;   //time in seconds
+        this.progressLoad = document.querySelector('.preloader__progress');
+        this.progressLoad.value= 0;
+        this.load = document.querySelector('.page__preloader');
+        // Play app variables
+        this.video = document.querySelector('.play__video');
+        this.playRange = document.querySelector('.play__range');
+        this.playRange.value = 0;
+        this.playRange.min = 0;
+        this.video.addEventListener('loadedmetadata', () => {
+            this.playRange.max = this.video.duration;
+        }); // not working directly for webkit!
+        this.playPause = document.querySelectorAll('.play__btn');
+        this.btnActive = 'play__btn__active';
+        this.hidden = 'preloader__hidden';
+    }
+
+    loadProgress() {
+        let f = () => {
+            setTimeout(() => {
+                if (!this.load.classList.contains(this.hidden)) {
+                    this.load.classList.add(this.hidden);
+                }
+            }, this.time);
+        };
+        f() === window.onload; // or the global object
+
+        // progress bar
+        this.time /=100; // time for all operations [100]!
+        this.intervalNum = setInterval(() => {
+            if (this.start > 100) {
+                clearInterval(this.intervalNum);
+            }
+            else {
+                this.progressLoad.value = this.start;
+            }
+            this.start++;
+        }, this.time);
+    }
+
+    PlayApp() {
+        if (this.video.paused) {
+            this.video.play();
+            this.startDuration = setInterval(()=> {
+                this.playRange.value = this.video.currentTime;
+
+                if (this.playRange.value === this.playRange.max) {
+                    this.playPause[0].classList.add(this.btnActive);
+                    this.playPause[1].classList.remove(this.btnActive);
+                }
+            }, 15);
+            this.playPause[0].classList.remove(this.btnActive);
+            this.playPause[1].classList.add(this.btnActive);
+        }
+        else {
+            this.video.pause();
+            clearInterval(this.startDuration);
+            this.playPause[0].classList.add(this.btnActive);
+            this.playPause[1].classList.remove(this.btnActive);
+        }
+    }
+    clickPlayApp() {
+        this.playPause[0].onclick = this.PlayApp.bind(this);
+        this.playPause[1].onclick = this.PlayApp.bind(this);
+        this.video.onclick = this.PlayApp.bind(this);
+    }
 }
-// Load progress bar
-function loadProgress(time) {
-	 var  start = 0;
-	 var progressLoad = document.getElementById('load-progress');
-	 setInterval( intervalNum = function () {
-	 	if (start > 100) {
-	 		clearInterval(intervalNum); 	
-	 	}
-	 	else {
-	 		progressLoad.value = start;
-	 	}
-	 	start++;
-
-	 }, time);
-}
-
-function PlayApp() {
-	/* Video play*/
-	var video = document.querySelector('.video');
-	var playPause = document.querySelectorAll('.play-pause');
-	var i = 0;
-	var playRange = document.querySelector('.play-range');
-	playRange.value = 0;
-	playRange.min = 0;
-	video.addEventListener('loadedmetadata', function() {
-	    playRange.max = video.duration;
-	}); // напрямую не работает для webkit!
-
-	function playPauseVideo() {
-		if (video.paused) {
-			video.play();
-			startDuration = setInterval(playRangeVideo, 15);
-			playPause[i].style.display = "none";
-			playPause[i+1].style.display = "block";
-		}
-		else {
-			video.pause();
-			clearInterval(startDuration);
-			playPause[i].style.display = "block";
-			playPause[i+1].style.display = "none";
-		}
-	}
-
-	function playRangeVideo() {
-		playRange.value = video.currentTime;
-		
-		if (playRange.value == playRange.max) {
-			playPause[i].style.display = "block";
-			playPause[i+1].style.display = "none";
-		}
-	}
-
-	playPause[i].onclick = playPauseVideo;
-	playPause[i+1].onclick = playPauseVideo;
-	video.onclick = playPauseVideo;
-};
-var play = new PlayApp();
+let display1 = new Display(2); // load time 2s
+display1.loadProgress();
+display1.clickPlayApp();
